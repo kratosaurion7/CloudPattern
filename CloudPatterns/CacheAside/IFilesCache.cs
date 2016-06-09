@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CloudPatterns
+namespace CloudPatterns.CacheAside
 {
     /// <summary>
     /// This class can be used to save transfers by keeping a local copy of a file. The copy of the file 
@@ -38,16 +38,6 @@ namespace CloudPatterns
         /// </summary>
         /// <param name="filename"></param>
         void ReplaceEntry(string filename, byte[] newData);
-
-        /// <summary>
-        /// Adds a value to the cache and adds it to the backing store. Need to be careful when calling this method, if the IFilesCache is linked
-        /// to a IFilesProvider and they target different backing stores, doing a WriteThrough will not add it to the store of the 
-        /// cache and not of the IFilesProvider.
-        /// </summary>
-        /// <param name="data">File data</param>
-        /// <param name="filename">Filename</param>
-        /// <param name="cacheData">Set to true to add the data to the cache. False will simply store it.</param>
-        void WriteThrough(byte[] data, string filename, bool cacheData = false);
 
         /// <summary>
         /// Drops all entries from the cache.

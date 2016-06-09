@@ -1,7 +1,8 @@
-﻿using System;
+﻿using CloudPatterns.CacheAside;
+using System;
 using System.IO;
 
-namespace CloudPatterns
+namespace CloudPatterns.FileProvider
 {
     internal class LocalFilesProvider : IFilesProvider
     {

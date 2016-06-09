@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using CloudPatterns.CacheAside;
+using System.IO;
 
-namespace CloudPatterns
+namespace CloudPatterns.FileProvider
 {
     /// <summary>
     /// Provides an abstraction over the storage medium of files. This class is used to read and write files from an 

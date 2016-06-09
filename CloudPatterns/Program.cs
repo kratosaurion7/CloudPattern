@@ -9,6 +9,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 using CloudPatterns.CacheAside;
+using CloudPatterns.FileProvider;
 
 namespace CloudPatterns
 {
