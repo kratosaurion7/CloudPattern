@@ -100,9 +100,12 @@ namespace CloudPatterns
         {
             CacheEntry evictedEntry = cachedFiles.SingleOrDefault(p => p.EntryName == filename);
 
-            evictedEntry.Data.Dispose();
+            if(evictedEntry != null)
+            {
+                evictedEntry.Data.Dispose();
 
-            cachedFiles.Remove(evictedEntry);
+                cachedFiles.Remove(evictedEntry);
+            }
         }
 
         public void RefreshEntry(string filename)

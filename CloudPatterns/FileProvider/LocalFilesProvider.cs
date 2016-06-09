@@ -44,6 +44,11 @@ namespace CloudPatterns
             return File.ReadAllBytes(destinationPath);
         }
 
+        public void SetCache(IFilesCache cachingStore)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Write(string filePath, byte[] data)
         {
             string destinationPath = Path.Combine(RootPath.FullName, filePath);

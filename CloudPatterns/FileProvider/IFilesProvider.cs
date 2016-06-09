@@ -36,5 +36,7 @@ namespace CloudPatterns
         /// </summary>
         /// <param name="filePath"></param>
         void Delete(string filePath);
+
+        void SetCache(IFilesCache cachingStore);
     }
 }

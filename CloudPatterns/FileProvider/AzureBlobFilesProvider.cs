@@ -10,6 +10,7 @@ namespace CloudPatterns
 {
     public class AzureBlobFilesProvider : IFilesProvider
     {
+        private IFilesCache Cache;
         private CloudBlobContainer Container;
 
         public AzureBlobFilesProvider(string storageManagerConnectionString, string targetContainerName)
@@ -30,6 +31,13 @@ namespace CloudPatterns
 
         public void Create(string filePath, byte[] data)
         {
+            if (Cache != null)
+            {
+                Cache.WriteThrough(data, filePath, true);
+
+                return;
+            }
+
             CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
 
             blockBlob.UploadFromByteArray(data, 0, data.Length);
@@ -44,6 +52,16 @@ namespace CloudPatterns
 
         public byte[] GetFile(string filePath)
         {
+            if(Cache != null)
+            {
+                byte[] cachedResult = Cache.GetData(filePath);
+
+                if(cachedResult != null)
+                {
+                    return cachedResult;
+                }
+            }
+
             CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
             blockBlob.FetchAttributes();
 
@@ -56,9 +74,23 @@ namespace CloudPatterns
 
         public void Write(string filePath, byte[] data)
         {
+            if(Cache != null)
+            {
+                Cache.Evict(filePath);
+
+                Cache.WriteThrough(data, filePath, true);
+
+                return;
+            }
+
             CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
 
             blockBlob.UploadFromByteArray(data, 0, data.Length);
+        }
+
+        public void SetCache(IFilesCache cachingStore)
+        {
+            Cache = cachingStore;
         }
     }
 }

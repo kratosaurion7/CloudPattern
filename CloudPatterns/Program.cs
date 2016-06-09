@@ -28,6 +28,7 @@ namespace CloudPatterns
 
             //IFilesProvider files = new LocalFilesProvider("depot");
             IFilesProvider files = new AzureBlobFilesProvider(Container);
+            files.SetCache(cache);
 
             byte[] data = File.ReadAllBytes("data.txt");
 
