@@ -15,13 +15,19 @@ namespace CloudPatterns
     {
         static void Main(string[] args)
         {
-            IFilesCache cache = new AzureBlobFileCache(CloudConfigurationManager.GetSetting("StorageConnectionString"), "mycontainer");
+            CloudStorageAccount account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudBlobClient client = account.CreateCloudBlobClient();
+            CloudBlobContainer Container = client.GetContainerReference("mycontainer");
+            Container.CreateIfNotExists();
+            Container.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+
+            IFilesCache cache = new AzureBlobFileCache(Container);
 
             if(Directory.Exists("depot"))
                 Directory.Delete("depot");
 
             //IFilesProvider files = new LocalFilesProvider("depot");
-            IFilesProvider files = new AzureBlobFilesProvider(CloudConfigurationManager.GetSetting("StorageConnectionString"), "mycontainer");
+            IFilesProvider files = new AzureBlobFilesProvider(Container);
 
             byte[] data = File.ReadAllBytes("data.txt");
 
