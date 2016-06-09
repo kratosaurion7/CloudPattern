@@ -8,6 +8,7 @@ using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
+using CloudPatterns.CacheAside;
 
 namespace CloudPatterns
 {
@@ -22,7 +23,7 @@ namespace CloudPatterns
             Container.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
 
             //IFilesCache cache = new AzureBlobFileCache(Container);
-            IFilesCache cache = new LocalFilesCache();
+            IFilesCache cache = new InMemoryCache();
 
             if (Directory.Exists("depot"))
                 Directory.Delete("depot");

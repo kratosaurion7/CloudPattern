@@ -37,7 +37,7 @@ namespace CloudPatterns
         /// Clears the local content of the target file and retrieves a new copy from the storage.
         /// </summary>
         /// <param name="filename"></param>
-        void RefreshEntry(string filename);
+        void ReplaceEntry(string filename, byte[] newData);
 
         /// <summary>
         /// Adds a value to the cache and adds it to the backing store. Need to be careful when calling this method, if the IFilesCache is linked

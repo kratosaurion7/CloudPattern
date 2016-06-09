@@ -75,13 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheAside\AzureBlobFileCache.cs" />
     <Compile Include="CacheAside\CacheEntry.cs" />
     <Compile Include="CacheAside\IFilesCache.cs" />
+    <Compile Include="CacheAside\InMemoryCache.cs" />
     <Compile Include="FileProvider\AzureBlobFilesProvider.cs" />
     <Compile Include="FileProvider\IFilesProvider.cs" />
     <Compile Include="IOUtilities.cs" />
-    <Compile Include="CacheAside\LocalFilesCache.cs" />
     <Compile Include="FileProvider\LocalFilesProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
