@@ -16,39 +16,6 @@ namespace CloudPatterns
             cachedFiles = new HashSet<CacheEntry>();
         }
 
-        public FileInfo GetFile(string filename)
-        {
-            CacheEntry found = cachedFiles.SingleOrDefault(p => p.EntryName == filename);
-
-            if(found == null)
-            {
-                FileInfo fileSearch = new FileInfo(filename);
-
-                FileStream fs = fileSearch.OpenRead();
-
-                var cachedStream = fs.ToMemoryStream();
-
-                fs.Close();
-
-                CacheEntry newEntry = new CacheEntry() { EntryName = filename, Data = cachedStream };
-
-                cachedFiles.Add(newEntry);
-
-                found = newEntry;
-            }
-
-            string tempFileName = Path.GetTempFileName();
-
-            FileInfo foundFile = new FileInfo(tempFileName);
-
-            FileStream wfs = foundFile.OpenWrite();
-            found.Data.WriteTo(wfs);
-
-            wfs.Close();
-
-            return foundFile;
-        }
-
         public byte[] GetData(string filename)
         {
             CacheEntry found = cachedFiles.SingleOrDefault(p => p.EntryName == filename);
@@ -117,6 +84,21 @@ namespace CloudPatterns
             cachedFile.Data = cachedStream;
 
             localStream.Close();
+        }
+        public void AddFile(string filename, byte[] data)
+        {
+            CacheEntry found = cachedFiles.SingleOrDefault(p => p.EntryName == filename);
+
+            if(found == null)
+            {
+                MemoryStream mem = new MemoryStream(data);
+
+                CacheEntry newEntry = new CacheEntry();
+                newEntry.EntryName = filename;
+                newEntry.Data = mem;
+
+                cachedFiles.Add(newEntry);
+            }
         }
 
         public void WriteThrough(byte[] data, string filename, bool cacheData = false)

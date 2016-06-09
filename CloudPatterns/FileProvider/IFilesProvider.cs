@@ -37,6 +37,10 @@ namespace CloudPatterns
         /// <param name="filePath"></param>
         void Delete(string filePath);
 
+        /// <summary>
+        /// Sets the caching mechanism that will be used for the requests to this provider from now on.
+        /// </summary>
+        /// <param name="cachingStore">Caching object that will be checked when doing a GetFile call.</param>
         void SetCache(IFilesCache cachingStore);
     }
 }

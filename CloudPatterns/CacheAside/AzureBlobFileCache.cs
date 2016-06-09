@@ -126,6 +126,21 @@ namespace CloudPatterns
             refreshedEntry.Data.Close();
             refreshedEntry.Data = dlStream;
         }
+        public void AddFile(string filename, byte[] data)
+        {
+            CacheEntry found = cachedFiles.SingleOrDefault(p => p.EntryName == filename);
+
+            if (found == null)
+            {
+                MemoryStream mem = new MemoryStream(data);
+
+                CacheEntry newEntry = new CacheEntry();
+                newEntry.EntryName = filename;
+                newEntry.Data = mem;
+
+                cachedFiles.Add(newEntry);
+            }
+        }
 
         public void WriteThrough(byte[] data, string filename, bool cacheData = false)
         {
@@ -158,5 +173,6 @@ namespace CloudPatterns
 
             cachedFiles.Clear();
         }
+
     }
 }

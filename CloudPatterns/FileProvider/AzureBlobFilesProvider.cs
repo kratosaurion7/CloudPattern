@@ -31,16 +31,16 @@ namespace CloudPatterns
 
         public void Create(string filePath, byte[] data)
         {
-            if (Cache != null)
-            {
-                Cache.WriteThrough(data, filePath, true);
-
-                return;
-            }
-
             CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
 
             blockBlob.UploadFromByteArray(data, 0, data.Length);
+
+            if (Cache != null)
+            {
+                Cache.AddFile(filePath, data);
+
+                return;
+            }
         }
 
         public void Delete(string filePath)
@@ -48,6 +48,11 @@ namespace CloudPatterns
             CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
 
             blockBlob.Delete();
+
+            if(Cache != null)
+            {
+                Cache.Evict(filePath);
+            }
         }
 
         public byte[] GetFile(string filePath)
@@ -74,18 +79,19 @@ namespace CloudPatterns
 
         public void Write(string filePath, byte[] data)
         {
-            if(Cache != null)
+            CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
+
+            blockBlob.UploadFromByteArray(data, 0, data.Length);
+
+            if (Cache != null)
             {
                 Cache.Evict(filePath);
 
-                Cache.WriteThrough(data, filePath, true);
+                Cache.AddFile(filePath, data);
 
                 return;
             }
 
-            CloudBlockBlob blockBlob = Container.GetBlockBlobReference(filePath);
-
-            blockBlob.UploadFromByteArray(data, 0, data.Length);
         }
 
         public void SetCache(IFilesCache cachingStore)
