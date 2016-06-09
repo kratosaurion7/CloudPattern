@@ -21,9 +21,10 @@ namespace CloudPatterns
             Container.CreateIfNotExists();
             Container.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
 
-            IFilesCache cache = new AzureBlobFileCache(Container);
+            //IFilesCache cache = new AzureBlobFileCache(Container);
+            IFilesCache cache = new LocalFilesCache();
 
-            if(Directory.Exists("depot"))
+            if (Directory.Exists("depot"))
                 Directory.Delete("depot");
 
             //IFilesProvider files = new LocalFilesProvider("depot");
