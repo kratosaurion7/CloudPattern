@@ -84,6 +84,8 @@
     <Compile Include="CacheAside\InMemoryCache.cs" />
     <Compile Include="CacheAside\LocalFilesCache.cs" />
     <Compile Include="CacheAside\RedisServerCache.cs" />
+    <Compile Include="ExternalConfig\XmlFileSettingStore.cs" />
+    <Compile Include="ExternalConfig\ISettingStore.cs" />
     <Compile Include="FileProvider\AzureBlobFilesProvider.cs" />
     <Compile Include="FileProvider\IFilesProvider.cs" />
     <Compile Include="IOUtilities.cs" />
