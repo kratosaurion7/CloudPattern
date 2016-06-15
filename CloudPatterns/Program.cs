@@ -27,10 +27,16 @@ namespace CloudPatterns
             IFilesProvider myfiles = cont.Get<IFilesProvider>();
             ISettingStore settings = cont.Get<ISettingStore>();
             LoggerFactory logFac = cont.Get<LoggerFactory>();
+            logFac.Configure();
             ILog logger = logFac.GetLogger();
 
             myfiles.Create("data.txt", File.ReadAllBytes("data.txt"));
 
+            logger.Debug("TEST HELLO ?!?!?!");
+
+            Console.ReadLine();
+
+            return;
             // Cloud config
             CloudStorageAccount account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
             CloudBlobClient client = account.CreateCloudBlobClient();

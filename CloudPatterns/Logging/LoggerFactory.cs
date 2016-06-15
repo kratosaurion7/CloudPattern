@@ -22,6 +22,7 @@ namespace CloudPatterns.Logging
         public LoggerFactory(IFilesProvider configFileSource, ISettingStore settings)
         {
             ConfigSource = configFileSource;
+            Settings = settings;
 
             DefaultLoggerName = settings.Get("default-logger-name");
             if(DefaultLoggerName == null) // Probably going be null in cases where we don't have a settings repo

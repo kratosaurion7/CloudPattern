@@ -17,11 +17,6 @@ namespace CloudPatterns.Dependencies
         {
             IKernel debugKernel = new StandardKernel();
 
-            // Create standard services 
-            LocalFilesProvider files = new LocalFilesProvider("fs");
-
-            ISettingStore settings = new XmlFileSettingStore(files, "DebugSettings.xml");
-
             // Make sure the files and folders are present to be used by the services
             if (!Directory.Exists("fs"))
                 Directory.CreateDirectory("fs");
@@ -31,17 +26,15 @@ namespace CloudPatterns.Dependencies
                 throw new FileNotFoundException("Debug settings not found, make sure to copy the DebugSettings.xml from the project folder to the app working dir.", "fs/DebugSettings.xml");
             }
 
-            LoggerFactory logFactory = new LoggerFactory(files, settings);
-
             // Using constant bindings
-            debugKernel.Bind<IFilesProvider>().ToConstant(files).InSingletonScope();
-            debugKernel.Bind<ISettingStore>().ToConstant(settings).InSingletonScope();
-            debugKernel.Bind<LoggerFactory>().ToConstant(logFactory).InSingletonScope();
+            //debugKernel.Bind<IFilesProvider>().ToConstant(files).InSingletonScope();
+            //debugKernel.Bind<ISettingStore>().ToConstant(settings).InSingletonScope();
+            //debugKernel.Bind<LoggerFactory>().ToConstant(logFactory).InSingletonScope();
 
             // Or dynamic construction
-            //debugKernel.Bind<IFilesProvider>().To<LocalFilesProvider>().WithConstructorArgument("rootDirectoryPath", "fs");
-            //debugKernel.Bind<ISettingStore>().To<XmlFileSettingStore>().WithConstructorArgument("settingsFilename", "config.xml");
-            //debugKernel.Bind<LoggerFactory>().ToSelf();
+            debugKernel.Bind<IFilesProvider>().To<LocalFilesProvider>().WithConstructorArgument("rootDirectoryPath", "fs");
+            debugKernel.Bind<ISettingStore>().To<XmlFileSettingStore>().WithConstructorArgument("settingsFilename", "DebugSettings.xml");
+            debugKernel.Bind<LoggerFactory>().ToSelf();
 
             return debugKernel;
         }
