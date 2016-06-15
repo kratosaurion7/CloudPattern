@@ -24,9 +24,26 @@
     </layout>
   </appender>
 
+  <appender name="DebugAppender" type="CloudPatterns.Logging.DebugAppender">
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+  </appender>
+
+  <appender name="Azure" type="CloudPatterns.Logging.AzureFileAppender">
+    <ConnectionstringSettingname value="StorageConnectionString" />
+    <ContainerName value="Logs" />
+    
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+  </appender>
+
   <root>
     <level value="DEBUG" />
     <appender-ref ref="ColoredConsoleAppender" />
     <appender-ref ref="FileAppender" />
+    <appender-ref ref="DebugAppender" />
+    <appender-ref ref="Azure" />
   </root>
 </log4net>

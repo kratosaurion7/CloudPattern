@@ -104,6 +104,8 @@
     <Compile Include="FileProvider\IFilesProvider.cs" />
     <Compile Include="IOUtilities.cs" />
     <Compile Include="FileProvider\LocalFilesProvider.cs" />
+    <Compile Include="Logging\AzureFileAppender.cs" />
+    <Compile Include="Logging\DebugAppender.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
