@@ -10,6 +10,11 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 using CloudPatterns.CacheAside;
 using CloudPatterns.FileProvider;
+using Ninject;
+using CloudPatterns.Dependencies;
+using CloudPatterns.ExternalConfig;
+using CloudPatterns.Logging;
+using log4net;
 
 namespace CloudPatterns
 {
@@ -17,6 +22,16 @@ namespace CloudPatterns
     {
         static void Main(string[] args)
         {
+            // Service creation
+            IKernel cont = InjectionHelper.CreateDebugContainer();
+            IFilesProvider myfiles = cont.Get<IFilesProvider>();
+            ISettingStore settings = cont.Get<ISettingStore>();
+            LoggerFactory logFac = cont.Get<LoggerFactory>();
+            ILog logger = logFac.GetLogger();
+
+            myfiles.Create("data.txt", File.ReadAllBytes("data.txt"));
+
+            // Cloud config
             CloudStorageAccount account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
             CloudBlobClient client = account.CreateCloudBlobClient();
             CloudBlobContainer Container = client.GetContainerReference("mycontainer");

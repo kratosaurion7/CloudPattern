@@ -1,0 +1,4 @@
+<config>
+	<setting name="default-logger-name" value="MyLogger" />
+	<setting name="logger-config-file-name" value="log4netConfig.xml" />
+</config>

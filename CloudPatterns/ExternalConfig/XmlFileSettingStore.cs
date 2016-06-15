@@ -29,6 +29,7 @@ namespace CloudPatterns.ExternalConfig
         public XmlFileSettingStore(IFilesProvider storage, string settingsFilename)
         {
             SettingsStorage = storage;
+            SettingsFilename = settingsFilename;
         }
 
         public Dictionary<string, string> FindAll()
@@ -36,7 +37,7 @@ namespace CloudPatterns.ExternalConfig
             // TODO : Check if a new version of the config file exists, if yes retrieve it and then get the value because it might have been changed.
             XElement configFile = GetXmlConfigFile(SettingsFilename);
 
-            return configFile.Element("config").Elements("setting").ToDictionary(x => x.Attribute("name").Value, x => x.Attribute("value").Value);
+            return configFile.Elements("setting").ToDictionary(x => x.Attribute("name").Value, x => x.Attribute("value").Value);
         }
 
         public string Get(string key)
@@ -45,7 +46,7 @@ namespace CloudPatterns.ExternalConfig
             XElement configFile = GetXmlConfigFile(SettingsFilename);
 
             // ATTENTION, USING THE '?.' null safety operator.
-            return configFile.Element("config").Elements("setting").SingleOrDefault(p => p.Attribute("name").Value == key)?.Attribute("value").Value;
+            return configFile.Elements("setting").SingleOrDefault(p => p.Attribute("name").Value == key)?.Attribute("value").Value;
         }
 
         public void Update(string key, string value)
@@ -57,7 +58,9 @@ namespace CloudPatterns.ExternalConfig
         {
             byte[] settingsData = SettingsStorage.GetFile(filename);
 
-            return XElement.Parse(settingsData.ToString());
+            String stringdata = System.Text.Encoding.Default.GetString(settingsData);
+
+            return XElement.Parse(stringdata);
         }
     }
 }
