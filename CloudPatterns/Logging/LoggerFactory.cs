@@ -25,7 +25,7 @@ namespace CloudPatterns.Logging
             Settings = settings;
 
             DefaultLoggerName = settings.Get("default-logger-name");
-            if(DefaultLoggerName == null) // Probably going be null in cases where we don't have a settings repo
+            if(DefaultLoggerName == null)
             {
                 DefaultLoggerName = "default";
             }
@@ -49,6 +49,8 @@ namespace CloudPatterns.Logging
             MemoryStream configFileData = new MemoryStream(configData);
 
             XmlConfigurator.Configure(configFileData);
+
+            configFileData.Close();
         }
 
         public ILog GetLogger(string name = null)

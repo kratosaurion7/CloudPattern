@@ -30,6 +30,7 @@ namespace CloudPatterns
             logFac.Configure();
             ILog logger = logFac.GetLogger();
 
+            File.Delete("fs/data.txt");
             myfiles.Create("data.txt", File.ReadAllBytes("data.txt"));
 
             logger.Debug("TEST HELLO ?!?!?!");
