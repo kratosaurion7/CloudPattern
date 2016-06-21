@@ -15,6 +15,7 @@ using CloudPatterns.Dependencies;
 using CloudPatterns.ExternalConfig;
 using CloudPatterns.Logging;
 using log4net;
+using CloudPatterns.BusinessRules.Test;
 
 namespace CloudPatterns
 {
@@ -22,6 +23,11 @@ namespace CloudPatterns
     {
         static void Main(string[] args)
         {
+            TestCase bisTest = new TestCase();
+            bisTest.RunTests();
+
+            return;
+
             // Service creation
             IKernel cont = InjectionHelper.CreateDebugContainer();
             IFilesProvider myfiles = cont.Get<IFilesProvider>();
