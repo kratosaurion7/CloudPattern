@@ -91,6 +91,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessRules\BusinessRule.cs" />
+    <Compile Include="BusinessRules\BusinessRulesRepository.cs" />
+    <Compile Include="BusinessRules\GenericRule.cs" />
     <Compile Include="CacheAside\CacheEntry.cs" />
     <Compile Include="CacheAside\IFilesCache.cs" />
     <Compile Include="CacheAside\InMemoryCache.cs" />
