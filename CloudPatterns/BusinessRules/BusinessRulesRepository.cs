@@ -33,5 +33,15 @@ namespace CloudPatterns.BusinessRules
 
             return completeResult;
         }
+
+        public IEnumerable<BusinessRule<T>> GetPassedRules(T objectTest)
+        {
+            return RuleSet.Where(p => p.Process(objectTest) == true);
+        }
+
+        public IEnumerable<BusinessRule<T>> GetFailedRules(T objectTest)
+        {
+            return RuleSet.Where(p => p.Process(objectTest) == false);
+        }
     }
 }
