@@ -14,6 +14,7 @@ namespace CloudPatterns.BusinessRules.Test
             
             UserRole adminRole = new UserRole() { RoleName = "Admin", RolePrecedence = 1 };
             UserRole readerRole = new UserRole() { RoleName = "Reader", RolePrecedence = 2 };
+            UserRole debugRole = new UserRole() { RoleName = "Debug", RolePrecedence = -1 };
 
             User testUser = new User();
             testUser.Username = "tdube";
@@ -26,10 +27,9 @@ namespace CloudPatterns.BusinessRules.Test
             BusinessRule<User> UserHasEnoughPermissions = new GenericRule<User>("User must be admin", u => u.Roles.Any(r => r.CompareTo(adminRole) <= 0));
             UserRules.RuleSet.Add(UserHasEnoughPermissions);
 
+            var result = UserRules.Apply(testUser);
             var failed = UserRules.GetFailedRules(testUser);
 
-
-            var result = UserRules.Apply(testUser);
 
             int i = 0;
         }
