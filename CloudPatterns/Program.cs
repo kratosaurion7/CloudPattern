@@ -23,6 +23,21 @@ namespace CloudPatterns
     {
         static void Main(string[] args)
         {
+            Func<int> testFunc = () =>
+            {
+                System.Threading.Thread.Sleep(25000);
+
+                return 4;
+            };
+
+            var ret = new Retry.Retry<int>(testFunc, 1000, 10000).Start();
+
+            ret.Wait();
+
+            Console.ReadLine();
+
+            return;
+
             TestCase bisTest = new TestCase();
             bisTest.RunTests();
 
