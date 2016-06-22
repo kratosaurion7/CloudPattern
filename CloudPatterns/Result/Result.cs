@@ -43,19 +43,9 @@ namespace CloudPatterns.Result
         }
 
         // One of them must be null and the other must be set
-        public T_RESULT Value { get; set; }
-        public T_ERROR Error { get; set; }
+        public T_RESULT Value { get; private set; }
+        public T_ERROR Error { get; private set; }
         public RESULT_STATE ResultStatus { get; private set; }
-
-        /// <summary>
-        /// Create a Result object with the Value and Error field unpopulated. Only a single one should be assigned
-        /// and the other should be a default(T).
-        /// </summary>
-        public Result()
-        {
-            Value = default(T_RESULT);
-            Error = default(T_ERROR);
-        }
 
         /// <summary>
         /// Create a Result object from a successful value.
