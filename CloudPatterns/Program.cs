@@ -23,6 +23,10 @@ namespace CloudPatterns
     {
         static void Main(string[] args)
         {
+            var test = Result.Result<object, Exception>.FromTest(() => { return new object(); }, new Exception("asdasd"));
+
+            return;
+
             Func<int> testFunc = () =>
             {
                 System.Threading.Thread.Sleep(25000);

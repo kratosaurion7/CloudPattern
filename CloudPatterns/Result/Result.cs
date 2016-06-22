@@ -101,7 +101,7 @@ namespace CloudPatterns.Result
         /// Problems with generic type constraint was solved thanks to 
         /// http://stackoverflow.com/questions/183923/compiler-fails-converting-a-constrained-generic-type
         /// </remarks>
-        public static Result<T_RESULT, T_ERROR> FromTest(Func<T_RESULT> test, Exception error_if_failed) 
+        public static Result<T_RESULT, T_ERROR> FromTest(Func<T_RESULT> test, T_ERROR error_if_failed) 
         {
             try
             {
@@ -109,7 +109,7 @@ namespace CloudPatterns.Result
 
                 if (result == null)
                 {
-                    return new Result<T_RESULT, T_ERROR>(error_if_failed as T_ERROR); // FAILED (Soft)
+                    return new Result<T_RESULT, T_ERROR>(error_if_failed); // FAILED (Soft)
                 }
                 else
                 {
