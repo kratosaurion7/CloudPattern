@@ -49,28 +49,14 @@ namespace CloudPatterns.Retry
 
             while(CurrentOperationCancelToken.IsCancellationRequested == false)
             {
-                CancellationTokenSource currentIntervalSource = new CancellationTokenSource();
-                CancellationToken currentIntervalToken = currentIntervalSource.Token;
-
-                Task<T> wanted = new Task<T>(FunctionToCall, currentIntervalToken);
-
-                // Start a cancel until the next interval starts
-                currentIntervalSource.CancelAfter(TimeSpan.FromMilliseconds(IntervalTime));
-
+                Task<T> wanted = Task.Factory.StartNew(FunctionToCall);
+                
                 var result = await wanted; // Start the operation and block until it's done.
 
                 if (wanted.Status == TaskStatus.RanToCompletion)
                 {
                     return result;
                 }
-
-                // Not sure which to use, check timeout expiration or if it was cancelled.
-                if (DateTime.Now > timeoutLimit || currentIntervalToken.IsCancellationRequested)
-                {
-                    return default(T);
-                }
-
-                currentIntervalSource.Dispose();
             }
 
             return default(T); // Cancelled
